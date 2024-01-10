@@ -1,0 +1,12 @@
+[package]
+name = "minilsof"
+version = "0.1.0"
+edition = "2024"
+authors = ["jokemanfire <hu.dingyang@zte.com.cn>"]
+description = "minilsof"
+keywords = ["linux", "process"]
+repository = "https://github.com/jokemanfire/minilsof"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+glob = "*"
