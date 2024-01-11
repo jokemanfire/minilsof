@@ -15,6 +15,7 @@ pub struct Fdinfo {
 enum LsofFiletype {
     mem,
     all,
+    socket,
 }
 
 pub struct LsofData {
@@ -37,8 +38,6 @@ impl LsofData {
             targetFilename: String::new(),
         }
     }
-    /// to do get socket fd
-    fn get_socket_info(&self, path: String) {}
 
     fn get_pid_info(&self, path: String) -> HashMap<String, String> {
         let mut map: HashMap<String, String> = HashMap::new();
@@ -123,7 +122,7 @@ impl LsofData {
                 let mem_info = self.get_mem_info(format!("/proc/{}/maps", pid).to_string());
                 for i in mem_info {
                     info.link.insert(i.clone());
-                    if !self.targetFilename.is_empty() {
+                    if !self.targetFilename.is_empty() && self.targetFilename == i {
                         self.target_map_insert(pid.to_string());
                     }
                 }
@@ -140,7 +139,7 @@ impl LsofData {
                 if let Ok(link) = link {
                     let link_str = link.to_str().unwrap().to_string();
                     info.link.insert(link_str.clone());
-                    if !self.targetFilename.is_empty() {
+                    if !self.targetFilename.is_empty() && self.targetFilename == link_str{
                         self.target_map_insert(pid.to_string());
                     }
                 }
@@ -184,6 +183,29 @@ impl LsofData {
         self.set_list_all();
         return Some(&self.pidmap);
     }
+
+    //get port used by process
+    pub fn port_ls(&mut self,port:String) -> Option<Vec<Fdinfo>>{
+        let mut result: Vec<Fdinfo> = Vec::new();
+        self.targetFiletype = Some(LsofFiletype::socket);
+        self.targetFilename = format!("socket:[{}]",port);
+        self.set_list_all();
+        let t_result = self.targetmap.get(&self.targetFilename);
+        match t_result{
+            Some(t) => {
+                for s in t{
+                    if let Some(d) = self.pidmap.get(s) {
+                        result.push(d.clone());
+                    }
+                }
+            }
+            None =>{
+                return None;
+            }
+        }
+        return  Some(result);
+    }
+
 }
 
 #[test]
@@ -198,5 +220,12 @@ fn test_target() {
     let filepath = "/usr/lib64/librt-2.28.so".to_string();
     let mut d = LsofData::new();
     let result = d.target_file_ls(filepath).unwrap();
+    println!("{:?}", result);
+}
+#[test]
+fn test_port(){
+    let port = "46578".to_string();
+    let mut d = LsofData::new();
+    let result = d.port_ls(port);
     println!("{:?}", result);
 }
