@@ -40,6 +40,11 @@ impl LsofData{
             targetFilename:String::new(),
         }
     }
+    /// to do get socket fd
+    fn get_socket_info(&self,path : String){
+        
+    }
+
 
     fn get_pid_info(&self,path : String) -> HashMap<String, String>
     {
@@ -61,7 +66,7 @@ impl LsofData{
             Err(e) => {
                 println!("Error reading file: {}", e);
             }
-            }
+        }
         return map;
     }   
 
@@ -169,7 +174,14 @@ impl LsofData{
     pub fn target_file_ls(&mut self,path:String)->Option< Vec<Fdinfo>>
     {
         let mut result: Vec<Fdinfo> = Vec::new();
-        self.targetFiletype = Some(LsofFiletype::mem);
+        let metadata = fs::metadata(&path);
+        ///to do judge file type
+        if let Ok(metadata) = metadata{
+            let file_type = metadata.file_type();
+            println!("File type {:?}",file_type);
+        }
+
+        self.targetFiletype = Some(LsofFiletype::all);
         self.targetFilename = path;
         self.set_list_all();
    
@@ -187,7 +199,6 @@ impl LsofData{
                 return None;
             }
         }
-
         return Some(result);
     }
     //get all infomation
