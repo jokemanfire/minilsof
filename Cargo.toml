@@ -6,6 +6,7 @@ authors = ["jokemanfire <hu.dingyang@zte.com.cn>"]
 description = "minilsof"
 keywords = ["linux", "process"]
 repository = "https://github.com/jokemanfire/minilsof"
+license = "MIT/Apache-2.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 include = [
