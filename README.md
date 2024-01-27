@@ -25,12 +25,6 @@ fn test_target(){
     let result = d.target_file_ls(filepath).unwrap();
     println!("{:?}",result);
 }
-//lsof target port
-fn test_port(){
-    let port = "46578".to_string();
-    let mut d = LsofData::new();
-    let result = d.port_ls(port).unwrap();
-    println!("{:?}", result);
-}
+
 
 ```
