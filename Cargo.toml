@@ -1,6 +1,6 @@
 [package]
 name = "minilsof"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["jokemanfire <hu.dingyang@zte.com.cn>"]
 description = "minilsof"
