@@ -1,8 +1,12 @@
 # Rust - mini lsof
 
-a easy lsof Implemented by Rust
+A easy lsof Implemented by Rust
 
+Include library and example
 
+example is a easy cli program
+
+library will use async and sync implementions
 # Example
 
 ```rust
@@ -14,16 +18,19 @@ use minilsof::LsofData;
 #[test]
 fn test_lsall(){
     let mut d = LsofData::new();
-    let result = d.file_ls().unwrap();
-    println!("{:?}",result);
+    if let Some(result) = d.file_ls(){
+        println!("{:?}",result);
+    }
 }
 //target file
 #[test]
 fn test_target(){
     let filepath = "/usr/lib64/librt-2.28.so".to_string();
     let mut d = LsofData::new();
-    let result = d.target_file_ls(filepath).unwrap();
-    println!("{:?}",result);
+    let result = d.target_file_ls(filepath);
+    if let Some(result) = d.target_file_ls(){
+        println!("{:?}",result);
+    }
 }
 
 

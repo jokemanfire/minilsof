@@ -16,3 +16,8 @@ include = [
 
 [dependencies]
 glob = "0.3.1"
+tokio = { version = "1.41", features = ["rt", "sync", "io-util", "macros", "time"], optional = true }
+thiserror = "2.0.3"
+[features]
+default = []
+async = ["tokio"]
