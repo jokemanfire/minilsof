@@ -1,7 +1,13 @@
 [package]
-name = "example"
+name = "minilsof-cli"
 version = "0.1.0"
 edition = "2021"
+description = "Command-line interface for minilsof library"
+authors = ["jokemanfire <hu.dingyang@zte.com.cn>"]
 
 [dependencies]
-minilsof = {path= "../"}
+# Uncommented to enable the async feature
+minilsof = { path = "../", features = ["async"] }
+
+# To enable the async feature, uncomment the line below:
+# minilsof = { path = "../", features = ["async"] }
