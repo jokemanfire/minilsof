@@ -1,4 +1,4 @@
-#![doc = include_str!("../README.md")]
+// #![doc = include_str!("../README.md")]
 use glob::glob;
 use std::collections::{HashMap, HashSet};
 use std::fs::{self, read_to_string};
